@@ -1,36 +1,26 @@
 import { Note } from "./note.entity"
-
+import { noteModel } from "./note.model"
 class NoteRepository{
-    private notes: Note[] = []
 
-    findAll(): Note[]{
-        return this.notes
+    async findAll(): Promise<Note[]>{
+        return await noteModel.find()
     }
 
-    findById(id: string): Note | undefined{
-        console.log(this.notes)
-        console.log(this.notes.find(note => note.id === id))
-        return this.notes.find(note => note.id === id)
+    async findById(id: string): Promise<Note | null>{
+        return await noteModel.findById(id)
     }
 
-    insert(note: Omit<Note, 'id'>): Note{
-        const newNode: Note = {id: `note-${this.notes.length}`, ...note}
-        this.notes.push(newNode)
-        return newNode
+    async insert(note: Omit<Note, '_id'>): Promise<Note>{
+        return await noteModel.create(note)
     }
 
-    updateNote(id: string, updating: Partial<Note>): Note | undefined{
-        let index = this.notes.findIndex(note => note.id === id)
-        if(index === -1) return undefined
-        this.notes.splice(index, 1, {...this.notes[index], ...updating} as Note)
-        return this.notes[index]
+    async updateNote(id: string, updating: Partial<Note>): Promise<Note | null>{
+        //{new: true} -> to return the newest(updated) version of item
+        return await noteModel.findByIdAndUpdate(id, updating, {new: true})
     }
 
-    deleteById(id: string): Note | undefined{
-        const noteIndex: number = this.notes.findIndex(note => note.id === id)
-        const deletedNote = this.notes[noteIndex]
-        this.notes.splice(noteIndex, 1)
-        return deletedNote
+    async deleteById(id: string): Promise<Note | null>{
+        return noteModel.findByIdAndDelete(id)
     }
 }
 
