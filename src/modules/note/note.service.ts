@@ -2,7 +2,7 @@ import { Note } from "./note.entity";
 import { noteRepo } from "./note.repository";
 
 class NoteService{
-    async getNotes(){ 
+    async getAllNotes(){ 
         return await noteRepo.findAll() 
     }
 
@@ -10,12 +10,16 @@ class NoteService{
         return await noteRepo.findById(id) 
     }
 
+    async findUserNotes(user_id: string){
+        return await noteRepo.getUserNotes(user_id)
+    }
+
     async addNote(note: Omit<Note, 'id'>){ 
         return await noteRepo.insert(note) 
     }
 
-    async updateNote(id: string, updating: Partial<Note>){ 
-        return await noteRepo.updateNote(id, updating)
+    async updateNote(id: string, updating: Partial<Omit<Note, 'user_id'>>){ 
+        return await noteRepo.update(id, updating)
     }
 
     async removeNote(id: string){ 

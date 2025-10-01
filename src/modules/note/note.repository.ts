@@ -1,26 +1,13 @@
 import { Note } from "./note.entity"
 import { noteModel } from "./note.model"
-class NoteRepository{
+import { GenericRepository } from "../../shared/repository"
 
-    async findAll(): Promise<Note[]>{
-        return await noteModel.find()
+class NoteRepository extends GenericRepository<Note>{
+    constructor(){
+        super(noteModel)
     }
-
-    async findById(id: string): Promise<Note | null>{
-        return await noteModel.findById(id)
-    }
-
-    async insert(note: Omit<Note, '_id'>): Promise<Note>{
-        return await noteModel.create(note)
-    }
-
-    async updateNote(id: string, updating: Partial<Note>): Promise<Note | null>{
-        //{new: true} -> to return the newest(updated) version of item
-        return await noteModel.findByIdAndUpdate(id, updating, {new: true})
-    }
-
-    async deleteById(id: string): Promise<Note | null>{
-        return noteModel.findByIdAndDelete(id)
+    async getUserNotes(userID: string): Promise<Note[]>{
+        return await noteModel.find({user_id: userID})
     }
 }
 

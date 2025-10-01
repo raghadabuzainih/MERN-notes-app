@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { noteService } from "./note.service";
 class NoteController {
+    //all notes from all users
     async getAll(req: Request, res: Response){
         try{
-            const notes = await noteService.getNotes()
+            const notes = await noteService.getAllNotes()
             res.status(200).json({notes})
         }catch(error){
             res.status(400).json({error})
@@ -16,6 +17,16 @@ class NoteController {
             const note = await noteService.findNote(id)
             if(!note) return res.status(400).json({message: 'note not found'})
             res.status(200).json({note})
+        }catch(error){
+            res.status(400).json({error})
+        }
+    }
+    async getUserNotes(req: Request, res: Response){
+        try{
+            const id: string | undefined = req.params.id
+            if(!id) return res.status(400).json({message: 'id not found'})
+            const notes = await noteService.findUserNotes(id)
+            res.status(200).json({notes})
         }catch(error){
             res.status(400).json({error})
         }
