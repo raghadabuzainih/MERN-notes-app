@@ -1,5 +1,6 @@
 import { Note } from "./note.entity";
 import { noteRepo } from "./note.repository";
+import { noteZod } from "./note.zod";
 
 class NoteService{
     async getAllNotes(){ 
@@ -14,7 +15,8 @@ class NoteService{
         return await noteRepo.getUserNotes(user_id)
     }
 
-    async addNote(note: Omit<Note, 'id'>){ 
+    async addNote(note: Omit<Note, 'id'>){
+        const parsed = noteZod.parse(note)
         return await noteRepo.insert(note) 
     }
 

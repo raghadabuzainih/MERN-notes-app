@@ -1,7 +1,12 @@
 import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
-import { router } from './modules/note/note.routes'
+import { noteRouter } from './modules/note/note.routes'
+import { userRouter } from './modules/user/user.routes'
+import { authRouter } from './modules/auth/auth.routes'
+import { checkAuth, requireAuth } from './middleware/auth'
 import 'dotenv/config'
+import cookieParser from 'cookie-parser'
+import { errorHandler } from './middleware/error-handler'
 
 const app = express()
 
@@ -13,8 +18,15 @@ mongoose.connect(db_url)
 .catch(err => console.error(`failed to connect to mongoDB, ${err}`))
 
 app.use(express.json())
-app.use(router)
+app.use(cookieParser())
+app.use(checkAuth) //every page will know which user has currently login
+app.use('/auth', authRouter)
+app.use('/users', requireAuth, userRouter)
+app.use('/notes', requireAuth, noteRouter)
+
 //another routes
 app.use((req: Request, res: Response)=> {
-    res.status(404).send('page not found')
+    res.status(404).json({message: 'page not found'})
 })
+
+app.use(errorHandler)

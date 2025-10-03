@@ -7,7 +7,7 @@ class NoteController {
             const notes = await noteService.getAllNotes()
             res.status(200).json({notes})
         }catch(error){
-            res.status(400).json({error})
+            res.status(500).json({error})
         }
     }
     async getById(req: Request, res: Response){
@@ -18,7 +18,7 @@ class NoteController {
             if(!note) return res.status(400).json({message: 'note not found'})
             res.status(200).json({note})
         }catch(error){
-            res.status(400).json({error})
+            res.status(500).json({error})
         }
     }
     async getUserNotes(req: Request, res: Response){
@@ -28,16 +28,17 @@ class NoteController {
             const notes = await noteService.findUserNotes(id)
             res.status(200).json({notes})
         }catch(error){
-            res.status(400).json({error})
+            res.status(500).json({error})
         }
     }
     async addNote(req: Request, res: Response){
         try{
             const data = req.body
-            const note = await noteService.addNote(data)
+            const user = res.locals.user //from checkAuth
+            const note = await noteService.addNote({...data, user_id: user.id})            
             res.status(200).json({note})
         }catch(error){
-            res.status(400).json({error})
+            res.status(500).json({error})
         }
     }
     async updateNote(req: Request, res: Response){
@@ -49,7 +50,7 @@ class NoteController {
             if(!updated) return res.status(400).json({message: 'note not found'})
             res.status(200).json({note: updated})
         }catch(error){
-            res.status(400).json({error})
+            res.status(500).json({error})
         }
     }
     async deleteNote(req: Request, res: Response){
@@ -60,7 +61,7 @@ class NoteController {
             if(!deletedNote) return res.status(400).json({message: 'note not found'})
             res.status(200).json({deletedNote})
         }catch(error){
-            res.status(400).json({error})
+            res.status(500).json({error})
         }
     } 
 }

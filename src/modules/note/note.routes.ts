@@ -1,13 +1,17 @@
 import { Router } from "express";
 import { noteController } from "./note.controller";
+import { requireAuth, requireRole } from "../../middleware/auth";
 
-export const router = Router()
+export const noteRouter = Router()
 
-router.get('/notes', noteController.getAll)
-router.get('/notes/:id', noteController.getById)
-router.post('/notes', noteController.addNote)
-router.put('/notes/:id', noteController.updateNote)
-router.delete('/notes/:id', noteController.deleteNote)
+noteRouter.post('/',  noteController.addNote)
+noteRouter.put('/:id', noteController.updateNote)
+noteRouter.delete('/:id', noteController.deleteNote)
 
 //get all notes for specific user
-router.get('/users/:id/notes', noteController.getUserNotes)
+noteRouter.get('/users/:id/notes', noteController.getUserNotes)
+
+//only for admin
+//passed 2 middlewares -> requireAuth(in server.ts) & requireRole
+noteRouter.get('/', requireRole(['admin']), noteController.getAll)
+noteRouter.get('/:id', requireRole(['admin']), noteController.getById)

@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { userController } from "./user.controller";
+import { requireAuth, requireRole } from "../../middleware/auth";
 
-export const router = Router()
+export const userRouter = Router()
 
-router.get('/users', userController.getAll)
-router.get('/users:id', userController.getById)
-router.post('/users', userController.addUser)
-router.put('/users:id', userController.updateUser)
-router.delete('/users:id', userController.deleteUser)
+userRouter.get('/',requireRole(['admin']), userController.getAll)
+userRouter.get('/:id', userController.getById)
+userRouter.post('/', userController.addUser)
+userRouter.put('/:id', userController.updateUser)
+userRouter.delete('/:id', userController.deleteUser)
