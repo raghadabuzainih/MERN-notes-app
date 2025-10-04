@@ -12,10 +12,11 @@ class UserService{
     //this for admin if want to add new member
     async addUser(user: Omit<User, 'id'>){
         const parsed = userZod.parse(user)
-        user.role = 'member'
+        if(await userRepo.isEmailExists(user.email)) return 'user already exists'
         return await userRepo.insert(user) 
     }  
     async updateUser(id: string, updating: Partial<User>){ 
+        const parsed = userZod.partial().strict().parse(updating)
         return await userRepo.update(id, updating)
     }
     async removeUser(id: string){ 

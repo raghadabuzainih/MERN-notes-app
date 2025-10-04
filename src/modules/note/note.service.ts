@@ -21,6 +21,7 @@ class NoteService{
     }
 
     async updateNote(id: string, updating: Partial<Omit<Note, 'user_id'>>){ 
+        const parsed = noteZod.partial().strict().parse(updating)
         return await noteRepo.update(id, updating)
     }
 

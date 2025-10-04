@@ -9,7 +9,7 @@ noteRouter.put('/:id', noteController.updateNote)
 noteRouter.delete('/:id', noteController.deleteNote)
 
 //get all notes for specific user
-noteRouter.get('/users/:id/notes', noteController.getUserNotes)
+noteRouter.get('/user/:id', noteController.getUserNotes)
 
 //only for admin
 //passed 2 middlewares -> requireAuth(in server.ts) & requireRole

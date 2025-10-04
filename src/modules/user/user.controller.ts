@@ -15,9 +15,10 @@ class UserController {
     }
     async addUser(req: Request, res: Response){
         const data = req.body
-        const user = await userService.addUser(data)
-        user.password = await argon2.hash(user.password)
-        res.status(201).json({user})
+        const result = await userService.addUser(data)
+        if(result === 'user already exists') return res.status(401).json({message: result})
+        result.password = await argon2.hash(result.password)
+        res.status(201).json({result})
     }
     async updateUser(req: Request, res: Response){
         const id = req.params.id

@@ -34,7 +34,7 @@ class AuthService{
         const parsed = signinZod.parse(data)
         const user = await userModel.findOne({email: data.email})
         if(!user) return 'incorrect email'
-        const isMatch = await argon2.verify(data.password, user.password)
+        const isMatch = await argon2.verify(user.password, data.password)
         if(!isMatch) return 'incorrect password'
         const token = createToken(user.id, user.role)
         return {user, token}
