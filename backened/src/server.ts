@@ -7,6 +7,7 @@ import { checkAuth, requireAuth } from './middleware/auth'
 import 'dotenv/config'
 import cookieParser from 'cookie-parser'
 import { errorHandler } from './middleware/error-handler'
+import cors from 'cors'
 
 const app = express()
 
@@ -18,8 +19,16 @@ mongoose.connect(db_url)
 .catch(err => console.error(`failed to connect to mongoDB, ${err}`))
 
 app.use(express.json())
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true
+    })
+)
 app.use(cookieParser())
+
 app.use(checkAuth) //every page will know which user has currently login
+
 app.use('/auth', authRouter)
 app.use('/users', requireAuth, userRouter)
 app.use('/notes', requireAuth, noteRouter)
