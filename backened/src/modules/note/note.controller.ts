@@ -14,7 +14,7 @@ class NoteController {
         res.status(200).json({note})
     }
     async getUserNotes(req: Request, res: Response){
-        const id: string | undefined = req.params.id
+        const id = res.locals.user
         if(!id) return res.status(400).json({message: 'id not found'})
         const notes = await noteService.findUserNotes(id)
         res.status(200).json({notes})

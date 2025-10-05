@@ -1,9 +1,10 @@
-import { Typography } from "@mui/material"
+import { BrowserRouter } from "react-router-dom"
+import { AppRoutes } from "./routes/AppRoutes"
 
 export const App = () => {
   return (
-    <>
-      <Typography fontSize={'large'}>hello</Typography>
-    </>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   )
 }
