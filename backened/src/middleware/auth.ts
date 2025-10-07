@@ -3,12 +3,6 @@ import 'dotenv/config'
 import { Request, Response, NextFunction } from 'express'
 import { userModel } from '../modules/user/user.model'
 
-interface JwtPayload {
-    id: string
-    iat?: number
-    exp?: number
-}
-
 const secret = process.env.JWT_secret as Secret
 
 export const requireAuth = (req: Request, res: Response, next: NextFunction) => {

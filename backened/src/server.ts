@@ -30,7 +30,7 @@ app.use(cookieParser())
 app.use(checkAuth) //every page will know which user has currently login
 
 app.use('/auth', authRouter)
-app.use('/users', requireAuth, userRouter)
+app.use('/users', userRouter)
 app.use('/notes', requireAuth, noteRouter)
 
 //another routes

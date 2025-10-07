@@ -4,7 +4,7 @@ import { Request, Response } from "express"
 const setTokenCookie = (res: Response, token: string) => {
     res.cookie('jwt', token,{
         httpOnly: true,
-        maxAge: 3*24*60*60*1000
+        maxAge: 3*60*60*1000
     })
 }
 
