@@ -33,8 +33,10 @@ export const UserNotes = () => {
                         {notes.map(note =>
                             <Note
                                 key={`note-${note._id}`}
+                                onNotesUpdated={fetchData}
                                 title={note.title}
                                 content={note.content}
+                                _id={note._id}
                             />
                         )}
                         {notes.length === 0 && <Typography>You still not create any notes.</Typography>}

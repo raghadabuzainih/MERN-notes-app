@@ -1,64 +1,51 @@
 # MERN Notes App
 
-A full-stack **MERN (MongoDB, Express, React, Node.js)** application for creating and managing personal notes.  
-It includes **authentication**, **authorization**, **validation using Zod**, and a **modular architecture** built with **TypeScript**.
+A full-stack MERN (MongoDB, Express, React, Node.js) application for managing personal notes with secure authentication, authorization.
+ 
+---
+
+## Project URLs
+- **Backend:** http://localhost:3000  
+- **Frontend:** http://localhost:5173  
 
 ---
 
 ## Features
 
 ### Authentication & Authorization
-- Register and login with email & password  
-- Passwords hashed using **Argon2**  
-- **JWT tokens** stored in cookies for session management  
-- Role-based access control (admin / member) 
-
-### Users Managmenet
-- A new user can be added in two ways:
-- Through the signup process.
-- By the Admin, who can manually add a new user as either a member or another admin.
-- Users can perform CRUD operations (Create, Read, Update, Delete) on their account.
+- Register and login with email & password (frontend + backend)
+- Passwords hashed using **Argon2**
+- **JWT tokens** stored in cookies for session management
+- Role-based access control (Admin / Member)
+- **dotenv** used for managing environment variables
+- Show success/failed alerts after submitting the form
 
 ### Notes Management
-- Create, read, update, and delete notes  
-- Each note belongs to a specific user  
-- Zod validation for input data  
-- Protected routes (only logged-in users can manage their notes)
+- Full **CRUD** for notes (frontend + backend)
+- Each note belongs to a specific user
+- Admins can view all notes; members can view only their own
+- Showing dialogs for adding, editing & deleting note
 
-### The system supports **two main user roles**:
-- **Admin** – Can manage all users and notes.
-- **Member** – Can manage only their own notes.
+### User Management
+- Users can register via signup form  
+- Admins can manually add new users (as Admin or Member)  
+- CRUD operations for user accounts
+- Protected routes — only authenticated users can access their data  
 
 ### Backend Architecture
-- Built using **Express + TypeScript**
-- Follows **modular structure**
-- **Zod validation** for all incoming data
+- Built with **Express + TypeScript**
+- Uses **Mongoose** for MongoDB
+- CORS enabled for secure cross-origin communication between client and server
+- **Zod** for request validation
+- **dotenv** for environment configuration
 - Centralized **error handling middleware**
-- Uses **Mongoose** for database operations
+- **authMiddleware** for verifying JWT
+- **requireRole** for access restriction
+- **checkUser** to identify the current user if exists and attach their data
 
 ### Frontend (React)
-- Built using **Vite + React + TypeScript**
-- Consumes backend APIs via Axios  
-- Displays, adds, edits, and deletes notes & users 
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-------------|
-| **Frontend** | React, TypeScript, Vite |
-| **Backend** | Node.js, Express, TypeScript |
-| **Database** | MongoDB (Mongoose) |
-| **Validation** | Zod |
-| **Security** | Argon2, JWT, Cookies |
-
----
-
-## Middlewares
-- `errorHandler`: Catches all Zod and server errors  
-- `requireRole`: Restricts access to specific user roles  
-- `authMiddleware`: Verifies JWT and user authentication 
-- `errorHandler`: Catches all Zod and server errors  
-- `requireRole`: Restricts access to specific user roles  
-- `authMiddleware`: Verifies JWT and user authentication  
+- Built with **Vite + React + TypeScript**
+- Uses **Material UI (MUI)** for UI components
+- Routing handled by **React Router**
+- Form validation using **Formik + Yup**
+- API requests handled by **Axios**

@@ -13,12 +13,12 @@ export const addNote = async(data: Pick<Note, 'content' | 'title'>) : Promise<No
 }
 
 export const updateNote = async(id: string, data: Pick<Note, 'content' | 'title'>) : Promise<Note> => {
-    const res = await axiosClient.put(`/notes/${id}`, data)
+    const res = await axiosClient.put(`/notes/my-notes/${id}`, data)
     return res.data.note
 }
 
 export const deleteNote = async(id: string) : Promise<Note> => {
-    const res = await axiosClient.delete(`/notes/${id}`)
+    const res = await axiosClient.delete(`/notes/my-notes/${id}`)
     return res.data.deletedNote
 }
 

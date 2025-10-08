@@ -8,8 +8,8 @@ export const noteRouter = Router()
 noteRouter.get('/my-notes', noteController.getUserNotes)
 
 noteRouter.post('/my-notes',  noteController.addNote)
-noteRouter.put('/:id', noteController.updateNote)
-noteRouter.delete('/:id', noteController.deleteNote)
+noteRouter.put('/my-notes/:id', noteController.updateNote)
+noteRouter.delete('/my-notes/:id', noteController.deleteNote)
 noteRouter.get('/:id', noteController.getById)
 
 //only for admin
