@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 import { Button, Grid, TextField, Typography } from "@mui/material"
 import { AxiosError } from "axios"
 import { User } from "../../../types/User"
-import { AlertMessage } from "../../user/components/AlertMessage"
+import { AlertMessage } from "../../../components/AlertMessage"
 
 const fields = [
     {label: 'Email', name: 'email'},

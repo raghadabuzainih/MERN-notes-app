@@ -8,7 +8,7 @@ import { AxiosError } from "axios"
 import { User } from "../../../types/User"
 import { excludedTypes } from "../../../types/shared"
 import { useNavigate } from "react-router-dom"
-import { AlertMessage } from "../../user/components/AlertMessage"
+import { AlertMessage } from "../../../components/AlertMessage"
 
 const fields = [
     {label: 'Full Name', name: 'fullName'},

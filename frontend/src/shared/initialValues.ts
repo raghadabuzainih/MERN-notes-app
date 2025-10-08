@@ -1,3 +1,4 @@
+import { Note } from "../types/Note"
 import { excludedTypes } from "../types/shared"
 import { User } from "../types/User"
 
@@ -12,4 +13,9 @@ export const initialRegister: Omit<User, excludedTypes> = {
 export const initialLogin: Pick<User, 'email' | 'password'> = {
     email: '',
     password: ''
+}
+
+export const initialNote: Pick<Note, 'title' | 'content'> = {
+    title: '',
+    content: ''
 }

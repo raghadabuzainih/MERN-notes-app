@@ -5,9 +5,9 @@ type props = Pick<NoteType, 'title' | 'content'>
 
 export const Note = ({title, content}: props) => {
     return(
-        <Card>
+        <Card sx={{m:1}}>
             <CardContent>
-                <Typography component={'h5'}>{title}</Typography>
+                <Typography variant={'h5'}><b>{title}</b></Typography>
                 <Typography component={'span'}>{content}</Typography>
             </CardContent>
         </Card>

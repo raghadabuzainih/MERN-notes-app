@@ -36,3 +36,9 @@ export const LoginValidation = Yup.object({
     //so every test in front side give false --> (savedUser.password != value we entered to password field)
     password: Yup.string().required('password is required')
 })
+
+export const NoteValidation = Yup.object({
+    //take min from note.zod -> backened
+    title: Yup.string().required('title is required').min(2, 'minimum number of characters is 2'),
+    content: Yup.string().required('content is required').min(10, 'minimum number of characters is 10')
+})

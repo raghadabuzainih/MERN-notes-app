@@ -1,18 +1,17 @@
-import { Note } from "../components/Note";
-import { Note as NoteType } from "../../../types/Note";
-import { getAllNotes } from "../api";
-import { GridLegacy as Grid, Container, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
+import { Card, CardContent, Container, Typography } from "@mui/material"
+import { getAllNotes } from "../api"
+import { useEffect, useState } from "react"
+import { Note } from "../../../types/Note"
+import { AxiosError } from "axios"
 
 export const Notes = () => {
-    const [notes, setNotes] = useState<NoteType[]>([])
+    const [allNotes, setAllNotes] = useState<Note[]>([])
     const [errMsg, setErrMsg] = useState<string | null>(null)
     useEffect(()=> {
         const fetchData = async() => {
             try{
                 const data = await getAllNotes()
-                setNotes(data)
+                setAllNotes(data)
             }catch(err){
                 const error = err as AxiosError<{message: string}>
                 setErrMsg(error.response?.data?.message || 'failed to fetch notes')
@@ -20,21 +19,24 @@ export const Notes = () => {
         }
         fetchData()
     }, [])
-
     return(
         <Container>
-            {
-                errMsg ? 
+            {errMsg ? 
                 <Typography variant="h2" color="error">{errMsg}</Typography> :
-                <Grid container spacing={2}>
-                    {notes.map(note =>
-                        <Note
-                            key={`note-${note._id}`} 
-                            title={note.title}
-                            content={note.content}
-                        />
+                <>
+                    {allNotes.map(note=>
+                        <Card key={`note-${note._id}`} sx={{m: 1}}>
+                            <CardContent>
+                                <Typography>Title: {note.title}</Typography>
+                                <Typography>Content: {note.content}</Typography>
+                                <Typography>Created By: {note.user_id}</Typography>
+                                <Typography>Created At: {note.createdAt}</Typography>
+                                <Typography>Updated At: {note.updatedAt}</Typography>
+                            </CardContent>
+                        </Card>
                     )}
-                </Grid>
+                    {allNotes.length === 0 && <Typography>There is no notes.</Typography>}
+                </>
             }
         </Container>
     )
